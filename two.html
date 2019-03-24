@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" method="get">
+        <input type="search" id="write1" style="height:40px;" name="find" placeholder="请输入想查找的商品">
+        <input type="submit" id="find" style="height:30px;width:100px;color:darkgray;" value="搜索">
+    </form>
+    <div id="write2" style="width:380px;float:left;">最近搜索</div>
+    <button id="clear" style="width:22px;height:22px;background-color:lightgray;color:ivory;float:left;padding-left:3px;">
+        ✖
+    </button>
+    <script>
+        var write1=document.getElementById("write1");
+        var find=document.getElementById("find");
+        //当输入框获得焦点时，显示橙色
+        write1.onfocus=function(){
+            write1.style.borderColor="orange";
+        }
+        //输入框失去焦点时，显示原来的颜色
+        write1.onblur=function(){
+            write1.style.borderColor="leghtgray";
+        }
+        //如果支持sessionstorage，就缓存记录
+        if(!window.localStorage){
+            alert("抱歉，不支持sessionstorage！");
+        }
+        else{
+            find.onclick=function(){
+                var data1=write1.value;
+                var time = new Date().getTime();
+                localStorage.setItem(time,data1);
+            }
+            document.getElementById("write2").innerHTML+='<br>';
+            if(localStorage.length){
+                for(var i=0;i<localStorage.length;i++){
+                    var key1=localStorage.key(i);
+                    var data2=localStorage.getItem(key1);
+                    for(var j=i+1;j<localStorage.length;j++){
+                        var key2=localStorage.key(j);
+                        var data3=localStorage.getItem(key2);
+                        if(data2==data3){
+                            localStorage.removeItem(key2);
+                        }
+                    } 
+                    document.getElementById("write2").innerHTML+='<span id="gray" style="background-color:lightgray;display:inline-block;margin-bottom:10px;">'+" "+data2+'</span>'+"&nbsp&nbsp&nbsp";
+                    var gray=document.getElementById("gray");
+                    gray.style.marginBottom=10;
+                }
+            }
+        }
+        var clear=document.getElementById("clear");
+        clear.onclick=function(){
+            if(localStorage.length){
+                localStorage.clear();
+                document.getElementById("write2").innerHTML="最近搜索";
+                clear.style.marginLeft="0px";
+                clear.style.marginTop="0px";
+            }
+            else{
+                document.getElementById("write2").innerHTML="没有可以删除的历史记录！";
+                write2.style.marginLeft="50px";
+                write2.style.marginTop="40px";
+            }
+        }
+        //设置消除按钮的位置
+        clear.style.marginTop=write2.offsetHeight-35+'px';
+    </script>
+</body>
+</html>
