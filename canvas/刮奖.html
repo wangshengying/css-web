@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div id="div1" style="width:400px;height:300px;">
+        <canvas id="canvas1" width="400px" height="300px"></canvas>
+    </div>
+    <script>
+        //保证刷新图片随意显示
+        var div1=document.getElementById("div1");
+        var arr=["img/one.jpg","img/five.jpg","img/three.jpg","img/four.jpg"];
+        var i=Math.round(3*Math.random());
+        //设置背景图
+        div1.style.backgroundImage="url("+arr[i]+")";
+        div1.style.backgroundPosition="-50px 0px";
+        
+        //要填充canvas，将canvas画满一个遮罩层
+        var elem=document.getElementById("canvas1");
+        var context=elem.getContext("2d");
+        context.fillStyle="gray";
+        context.fillRect(0,0,400,300);
+        context.globalCompositeOperation ="destination-out";
+
+        //画一个圆，当鼠标按下矩形区域并且拖动时，清除遮罩
+        elem.onmousedown=function(){
+            elem.onmousemove=function(){
+                (function(event){
+                var x=event.clientX;
+                var y=event.clientY;
+                context.beginPath();
+                context.arc(x,y,25,0,2*Math.PI);
+                context.strokeStyle="white";
+                context.stroke();
+                context.fillStyle="rgb(255,255,255)";
+                context.fill();
+                context.globalCompositeOperation = 'destination-out';
+                //清除85%的时候，就清除全部遮罩层
+                var img=context.getImageData(0,0,400,300);//获取所有像素点
+                var data=img.data;//获取所有像素点的数据
+                var number=0;
+                for(var i=0;i<data.length;i+=4){ 
+                    if(data[i+3]<10){
+                        number++;
+                    }
+                    if(number/(data.length/4)>0.85){
+                        console.log(number/(data.length/4));
+                        context.clearRect(0,0,400,300);
+                    }   
+                }
+                })(window.event);
+            }
+             
+        }
+        elem.onmouseup=function(){
+            elem.onmousemove=function(){
+
+            }
+        }
+    </script>
+</body>
+</html>
