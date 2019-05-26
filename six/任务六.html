@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #big{
+            width:500px;
+            height:500px;
+            border:2px solid grey;
+        }
+        #img1{
+            width:500px;
+            height:500px;
+            overflow: hidden;
+        }
+        #cover{
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:500px;
+            background: rgb(66, 62, 62);
+            opacity:0.5;
+            display: none;
+        }
+        #div1{
+            width:500px;
+            height:35px;
+            font-size:20px;
+            font-weight:bold;
+            color:white;
+        }
+        #div2{
+            color:rgba(105, 99, 99, 0.096);
+            width:500px;
+            height:120px;
+            font-size:15px;
+            color:dimgrey;
+            line-height:22px;
+            color:white;
+            display:none;
+        }
+        img{
+            width:500px;
+            overflow:hidden;
+        }
+        #box{
+            position:absolute;
+            top:475px;
+            background:rgb(207, 59, 138);
+        }
+        #big:hover #img1 img{
+            transform:scale(1.5);
+        }
+        #big:hover #cover{
+            display:block;
+        }
+        #big:hover #box #div2{
+            display:block;
+        }
+        #big:hover #box{
+            position:absolute;
+            top:355px;
+            transition: translate(0px,-30px);
+            transition: all 1s;
+        }
+        #big:hover{
+            transition:transform  ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="big" >
+        <div id="img1" >
+            <img src="img/flower.jpg" alt="">
+            <div id="cover"></div>
+        </div>
+        <div id="box">
+            <div id="div1">三生三世十里桃花</div>
+            <div id="div2"> 
+                四海八荒，为你而来。<br>
+                《三生三世十里桃花》是由林玉芬执导，杨幂、赵又廷领衔主演，
+                张智尧 、迪丽热巴、高伟光、等主演的古装玄幻剧。
+                该剧根据唐七公子同名小说改编，
+                讲述了青丘帝姬白浅和九重天太子夜华经历三段爱恨纠葛终成眷属的绝美仙恋故事。
+            </div>
+        </div>
+    </div>
+</body>
+</html>
